@@ -6,6 +6,7 @@ import com.study.querydsl.model.QHello;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.annotation.Commit;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
@@ -13,13 +14,14 @@ import javax.persistence.PersistenceContext;
 
 @SpringBootTest
 @Transactional
+@Commit
 class QuerydslApplicationTests {
 
 	@PersistenceContext
 	EntityManager em;
 
 	@Test
-	void contextLoads() {
+	void  contextLoads() {
 		Hello hello = new Hello();
 		em.persist(hello);
 
