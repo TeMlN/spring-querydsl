@@ -7,7 +7,6 @@ import com.study.querydsl.model.Team;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -77,4 +76,23 @@ public class QueryDslBasicTest {
                 .fetchOne();
     }
 
+    @Test
+    public void search() {
+        Member findMember = queryFactory.selectFrom(member)
+                .where(member.username.eq("member1").and(member.age.eq(10)))
+                .fetchOne();
+
+        Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
+        System.out.println("findMember = " + findMember);
+    }
+
+    @Test
+    public void searchAndParam() {
+        Member findMember = queryFactory.selectFrom(member)
+                .where(
+                        member.username.eq("member1"),
+                        member.age.eq(10)
+                )
+                .fetchOne();
+    }
 }
