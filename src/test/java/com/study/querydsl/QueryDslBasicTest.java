@@ -14,6 +14,8 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
+import static com.study.querydsl.model.QMember.*;
+
 @SpringBootTest
 @Transactional
 public class QueryDslBasicTest {
@@ -65,6 +67,14 @@ public class QueryDslBasicTest {
                 .fetchOne();
 
         Assertions.assertThat(findMember.getUsername()).isEqualTo("member1");
+    }
+
+    @Test
+    public void staticImportQuerydsl() { // 이렇게 써라. QMember.member <- 여기서 QMember를 static import
+        Member findMember = queryFactory.select(member)
+                .from(member)
+                .where(member.username.eq("member1"))
+                .fetchOne();
     }
 
 }
