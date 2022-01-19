@@ -1,5 +1,6 @@
 package com.study.querydsl;
 
+import com.querydsl.core.QueryResults;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import com.study.querydsl.model.Member;
 import com.study.querydsl.model.QMember;
@@ -12,6 +13,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+
+import java.util.List;
 
 import static com.study.querydsl.model.QMember.*;
 
@@ -94,5 +97,27 @@ public class QueryDslBasicTest {
                         member.age.eq(10)
                 )
                 .fetchOne();
+    }
+
+    @Test
+    public void resultFetch() {
+        List<Member> fetch = queryFactory
+                .selectFrom(member)
+                .fetch();
+
+        Member fetchOne = queryFactory
+                .selectFrom(member)
+                .fetchOne();
+
+        QueryResults<Member> results = queryFactory
+                .selectFrom(member)
+                .fetchResults();
+
+        results.getTotal();
+        List<Member> results1 = results.getResults();
+
+        long count = queryFactory
+                .selectFrom(member)
+                .fetchCount();
     }
 }
